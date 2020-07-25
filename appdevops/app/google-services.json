@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "189031365930",
+    "firebase_url": "https://appdevops-5632e.firebaseio.com",
+    "project_id": "appdevops-5632e",
+    "storage_bucket": "appdevops-5632e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189031365930:android:7241ce5231da7c771cb253",
+        "android_client_info": {
+          "package_name": "com.cap.app.appdevops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189031365930-57cq1pdct9hhib330uoq1rhqjbnp1o1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWYD9F05Qx8hiBjt4yqQeRN7ls3npG6ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189031365930-57cq1pdct9hhib330uoq1rhqjbnp1o1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
