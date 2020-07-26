@@ -1,0 +1,7 @@
+Release Notes - Version 2.0.0 (16/03/2020 - 01:00 PM)
+
+Change Log
+
+* Included awesome feature  - AppDevOps
+
+This file was automatically generated.
