@@ -17,6 +17,7 @@ class ScrollingActivity : AppCompatActivity() {
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Evento Version 2", Snackbar.LENGTH_LONG)
+
                     .setAction("Action", null).show()
         }
     }
