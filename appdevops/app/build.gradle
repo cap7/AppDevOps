@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.appdistribution'
+
+apply from: rootProject.file("gradle-scripts/google/signing.gradle")
+apply from: rootProject.file("gradle-scripts/distribution/app-distribution.gradle")
 
 android {
     compileSdkVersion 29
@@ -10,19 +14,71 @@ android {
         applicationId "com.cap.app.appdevops"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    signingConfigs {
+
+        debug {
+            signingDebug()
+        }
+
+        prod {
+            signingProd()
         }
     }
+
+
+    buildTypes {
+        release {
+
+            def type = "release"
+            applicationIdSuffix ".${type}"
+            versionNameSuffix "-${type}"
+            signingConfig signingConfigs.prod
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            firebaseAppDistribution {
+                releaseNotesFile = rootProject.file("gradle-scripts/distribution/release_notes.txt")
+                groups = "internal-testers"
+                serviceCredentialsFile = rootProject.file("gradle-scripts/distribution/service-account.json")
+            }
+        }
+
+        debug {
+            def type = "debug"
+            applicationIdSuffix ".${type}"
+            versionNameSuffix "-${type}"
+            signingConfig signingConfigs.debug
+            task generateReleaseNotes {
+                doLast({
+                    def releaseNotes = new File('release-notes.txt')
+                    releaseNotes.delete()
+                    releaseNotes << "Release Notes - Version $name_version (${date_version})\n\n"
+                    releaseNotes << "Change Log \n\n"
+                    def lastCommitCommand = "git log --format=%s --no-merges -n 1"
+                    def commitMessageLines = lastCommitCommand.execute()
+                    commitMessageLines.in.eachLine { line -> releaseNotes << "* " + line + "\n\n\n" }
+                    releaseNotes << "This file was automatically generated."
+                })
+            }
+            firebaseAppDistribution {
+                releaseNotesFile = "./release-notes.txt"
+                groups = "internal-testers"
+                serviceCredentialsFile = rootProject.file("gradle-scripts/distribution/service-account.json")
+            }
+
+
+        }
+    }
+
 }
+
+
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
