@@ -1,3 +1,6 @@
+language: android
+jdk: oraclejdk8
+
 deploy:
   - provider: script
     script:
