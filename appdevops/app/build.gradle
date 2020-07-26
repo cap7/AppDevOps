@@ -44,6 +44,7 @@ android {
             firebaseAppDistribution {
                 releaseNotesFile = rootProject.file("gradle-scripts/distribution/release_notes.txt")
                 groups = "internal-testers"
+                apkPath = rootProject.file("app/build/outputs/universal_apk/release/app-release-universal.apk")
                 serviceCredentialsFile = rootProject.file("gradle-scripts/distribution/service-account.json")
             }
         }
