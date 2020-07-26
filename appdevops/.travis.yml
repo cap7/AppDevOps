@@ -1,1 +1,7 @@
-language: android
+deploy:
+  - provider: script
+    script:
+      ./gradlew generateReleaseNotes assembleDebug appDistributionUploadDebug
+    on:
+      branch: master
+    skip_cleanup: true
